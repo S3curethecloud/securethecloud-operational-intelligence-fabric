@@ -28,3 +28,6 @@ out/
 # OS / editor
 .DS_Store
 .vscode/
+
+# Python package metadata
+*.egg-info/

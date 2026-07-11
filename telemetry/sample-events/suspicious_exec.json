@@ -1,0 +1,31 @@
+{
+  "id": "evt-001",
+  "source": "falco-simulated",
+  "event_type": "suspicious_process_exec",
+  "severity": "high",
+  "asset": {
+    "name": "payment-api",
+    "type": "kubernetes_workload",
+    "environment": "dev-banking"
+  },
+  "message": "Unexpected shell execution detected inside payment-api container",
+  "kubernetes": {
+    "namespace": "banking",
+    "pod": "payment-api-7f89c9",
+    "container": "payment-api",
+    "image": "securethecloud/payment-api:lab"
+  },
+  "process": {
+    "name": "sh",
+    "cmdline": "sh -c cat /etc/secrets/payment.env",
+    "user": "app"
+  },
+  "risk": {
+    "initial_score": 82,
+    "signals": [
+      "sensitive_workload",
+      "unexpected_shell",
+      "secret_file_access"
+    ]
+  }
+}

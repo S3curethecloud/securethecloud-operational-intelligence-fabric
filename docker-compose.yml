@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: oifabric
+      POSTGRES_USER: oifabric
+      POSTGRES_PASSWORD: oifabric
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  nats:
+    image: nats:2
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+
+  opa:
+    image: openpolicyagent/opa:latest
+    command:
+      - run
+      - --server
+      - --addr=0.0.0.0:8181
+      - /policies
+    ports:
+      - "8181:8181"
+    volumes:
+      - ./policy/opa:/policies
+
+volumes:
+  postgres_data:

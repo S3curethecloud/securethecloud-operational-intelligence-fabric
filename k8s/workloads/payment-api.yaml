@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-api
+  namespace: banking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-api
+  template:
+    metadata:
+      labels:
+        app: payment-api
+        sensitivity: high
+        business-unit: payments
+    spec:
+      containers:
+        - name: payment-api
+          image: nginx:1.25
+          ports:
+            - containerPort: 80

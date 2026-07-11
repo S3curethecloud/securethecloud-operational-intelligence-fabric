@@ -1,87 +1,32 @@
-# Verified Local Output
+# Verified Output
 
-The scaffold was smoke-tested with alternate local ports because port 8080 may already be reserved in some environments.
-
-## Commands Used
-
-```bash
-cd api
-PORT=18080 AI_SERVICE_URL=http://localhost:18081 go run ./cmd/server
-```
-
-```bash
-cd ai-service
-python3 -m uvicorn app.main:app --host 127.0.0.1 --port 18081
-```
-
-```bash
-API_URL=http://localhost:18080 ./scripts/simulate_runtime_event.sh
-API_URL=http://localhost:18080 ./scripts/run_investigation.sh <incident-id>
-API_URL=http://localhost:18080 ./scripts/approve_incident.sh <incident-id> approved
-API_URL=http://localhost:18080 ./scripts/replay_evidence.sh <incident-id>
-```
-
-## Expected Evidence Replay Shape
-
-```json
-{
-  "incident_id": "inc_example",
-  "chain": [
-    {
-      "step": 1,
-      "type": "runtime_event",
-      "source": "falco-simulated",
-      "summary": "Unexpected shell execution detected inside payment-api container"
-    },
-    {
-      "step": 2,
-      "type": "policy_decision",
-      "source": "opa",
-      "summary": "Secret file access attempt inside payment workload"
-    },
-    {
-      "step": 3,
-      "type": "risk_score",
-      "source": "api",
-      "summary": "Risk score calculated as 100"
-    },
-    {
-      "step": 4,
-      "type": "ai_investigation",
-      "source": "ai-service",
-      "summary": "Evidence indicates suspicious runtime behavior on payment-api."
-    },
-    {
-      "step": 5,
-      "type": "human_approval",
-      "source": "demo.reviewer@securethecloud.dev",
-      "summary": "approved: Reviewed evidence chain and approved for lab-only containment workflow."
-    }
-  ]
-}
-```
+This document records validated lab execution evidence for the SecureTheCloud Operational Intelligence Fabric.
 
 ## MVP Smoke Test — 2026-07-11
 
-Validated end-to-end governed AI operations flow:
+Validated end-to-end governed AI operations flow.
+
+### What was tested
 
 1. Simulated suspicious runtime event from `falco-simulated`.
-2. Ingested event through Go API at `/v1/events`.
+2. Ingested event through the Go API at `/v1/events`.
 3. Evaluated live OPA policy through `securethecloud.runtime.decision`.
-4. Returned policy decision:
+4. Returned live OPA policy decision:
    - allow: false
    - severity: critical
    - reason: Secret file access attempt inside payment workload
-5. Created high-risk incident for `payment-api`.
-6. Calculated risk score of 100.
+5. Created a high-risk incident for `payment-api`.
+6. Calculated risk score of `100`.
 7. Generated AI-assisted investigation summary.
 8. Required human approval.
 9. Recorded human approval from `demo.reviewer@securethecloud.dev`.
-10. Replayed full evidence chain.
+10. Replayed the full evidence chain.
 
-Evidence chain:
+### Evidence chain
 
 runtime_event -> policy_decision -> risk_score -> ai_investigation -> human_approval
+
+### OPA verification
 
 OPA fallback status:
 
@@ -90,3 +35,26 @@ fallback: false
 Verified policy name:
 
 securethecloud.runtime.decision
+
+### Governance boundary verified
+
+The lab confirms that:
+
+- AI summarizes evidence and recommends next steps.
+- OPA evaluates policy context.
+- Human approval is required for high-risk actions.
+- The lab does not claim production enforcement.
+- The lab does not claim SOC 2 certification.
+- Evidence, explanation, and packaging do not create authority.
+
+### MVP status
+
+Phase 4 — OPA Policy Correlation: complete.
+
+Phase 5 — Go Event API: complete.
+
+Phase 6 — AI Investigation Service: complete.
+
+Phase 7 — Human Approval Workflow: complete.
+
+Phase 9 — Evidence Replay: complete.

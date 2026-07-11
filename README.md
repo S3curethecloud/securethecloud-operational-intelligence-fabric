@@ -195,3 +195,38 @@ SecureTheCloud Operational Intelligence Fabric is a governed AI operations lab t
 ## Resume Bullet
 
 Built SecureTheCloud Operational Intelligence Fabric, a governed AI operations platform for telemetry correlation, runtime investigation, policy-aware agent orchestration, evidence-backed workflows, and human-in-the-loop operational approvals across Kubernetes and cloud-native environments.
+
+---
+
+# Verified MVP Screenshots
+
+The following screenshots show the working end-to-end MVP flow.
+
+## 1. API Running
+
+![API Running](docs/screenshots/01-api-running.png)
+
+## 2. Runtime Event Ingestion
+
+![Runtime Event Ingestion](docs/screenshots/02-runtime-event-ingestion.png)
+
+## 3. Live OPA Policy Evaluation
+
+![Live OPA Policy](docs/screenshots/03-live-opa-policy.png)
+
+## 4. AI-Assisted Investigation
+
+![AI Investigation](docs/screenshots/04-ai-investigation.png)
+
+## 5. Human Approval Workflow
+
+![Human Approval](docs/screenshots/05-human-approval.png)
+
+## 6. Evidence Replay
+
+![Evidence Replay](docs/screenshots/06-evidence-replay.png)
+
+## 7. GitHub Repository Homepage
+
+![GitHub Repo Homepage](docs/screenshots/07-github-repo-homepage.png)
+

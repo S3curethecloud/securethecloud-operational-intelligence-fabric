@@ -60,3 +60,33 @@ API_URL=http://localhost:18080 ./scripts/replay_evidence.sh <incident-id>
   ]
 }
 ```
+
+## MVP Smoke Test — 2026-07-11
+
+Validated end-to-end governed AI operations flow:
+
+1. Simulated suspicious runtime event from `falco-simulated`.
+2. Ingested event through Go API at `/v1/events`.
+3. Evaluated live OPA policy through `securethecloud.runtime.decision`.
+4. Returned policy decision:
+   - allow: false
+   - severity: critical
+   - reason: Secret file access attempt inside payment workload
+5. Created high-risk incident for `payment-api`.
+6. Calculated risk score of 100.
+7. Generated AI-assisted investigation summary.
+8. Required human approval.
+9. Recorded human approval from `demo.reviewer@securethecloud.dev`.
+10. Replayed full evidence chain.
+
+Evidence chain:
+
+runtime_event -> policy_decision -> risk_score -> ai_investigation -> human_approval
+
+OPA fallback status:
+
+fallback: false
+
+Verified policy name:
+
+securethecloud.runtime.decision

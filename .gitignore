@@ -10,3 +10,21 @@ __pycache__/
 .venv/
 *.log
 postgres_data/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+
+# Environment
+.env
+
+# OS / editor
+.DS_Store
+.vscode/
